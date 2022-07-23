@@ -52,7 +52,7 @@ import PIL.Image
 # fbcursor = fbilldb.cursor()
 
 root=Tk()
-root.geometry("1366x768")
+root.geometry("1300x730")
 
 root.title("Fin sYs")
 
@@ -71,16 +71,9 @@ mnus=ImageTk.PhotoImage(mnu)
 srh =PIL.Image.open("images\search.PNG")
 srh_img=ImageTk.PhotoImage(srh)
 
-stn =PIL.Image.open("images\Settings.PNG")
-stn_img=ImageTk.PhotoImage(stn)
-
 logo =PIL.Image.open("images\logo-icon.png")
-resized_image= logo.resize((50,50))
+resized_image= logo.resize((50,50), Image.ANTIALIAS)
 mai_logo= ImageTk.PhotoImage(resized_image)
-
-sig_up =PIL.Image.open("images/register.png")
-resized_sign_up= sig_up.resize((500,400))
-sign_up=ImageTk.PhotoImage(resized_sign_up)
 
 #--------------------------------------------------------------------------------------------Create Sign In customer
 
@@ -104,77 +97,50 @@ def main_sign_in():
     label.grid(row=2,column=1)
     label = Label(tp_lb_nm, text="Fin sYs",bg="#213b52", fg="white",font=('Calibri 30 bold'),border=0)
     label.grid(row=2,column=2)
-  
-    mnu_btn = Button(tp_lb_nm, image=mnus, bg="white", fg="black",border=0)
+    def hid_nav():
+        tabControl.hide(1)
+    mnu_btn = Button(tp_lb_nm, image=mnus, bg="white", fg="black",command=hid_nav,border=0)
     mnu_btn.grid(row=2,column=4,padx=50)
-
-    
 
     tp_lb_srh=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=700)#-------------------------Serch area Frame
     tp_lb_srh.grid(row=1,column=2)
-    def srh_fn(event):
-        if srh_top.get()=="Search":
-            srh_top.delete(0,END)
-        else:
-            pass
 
     srh_top = Entry(tp_lb_srh, width=50, font=('Calibri 16'))
-    srh_top.insert(0,"Search")
-    srh_top.bind("<Button-1>",srh_fn)
-    srh_top.grid(row=2,column=1,padx=(30,0), pady=20)
+    srh_top.insert(0,"Password")
+    # srh_top.bind("<Button-1>",sig_pass)
+    srh_top.grid(row=2,column=1)
 
-    srh_btn = Button(tp_lb_srh, image=srh_img, bg="#213b52", fg="black",border=0)
-    srh_btn.grid(row=2,column=4,padx=(0,30))
+    srh_btn = Button(tp_lb_srh, image=srh_img, bg="white", fg="black",border=0)
+    srh_btn.grid(row=2,column=4)
 
-    srh_btn = Button(tp_lb_srh, image=stn_img, bg="#213b52", fg="black",border=0)
-    srh_btn.grid(row=2,column=5,padx=(0,30))
-
-    tp_lb_nm=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=100)#-----------------------------Notification
+    tp_lb_nm=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=100)#----------------Notification
     tp_lb_nm.grid(row=1,column=3)
-    
-    tp_lb_npr=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=200)#---------------------------profile area name
-    tp_lb_npr.grid(row=1,column=4)
-    label = Label(tp_lb_npr, text="Errors",bg="#213b52", fg="white",font=('Calibri 16 bold'),border=0)
-    label.grid(row=1,column=1,padx=(20,20),pady=(10,0))
-    label = Label(tp_lb_npr, text="Online",bg="#213b52", fg="white",font=('Calibri 12 bold'),border=0)
-    label.grid(row=2,column=1,padx=(20,20),pady=(0,10))
+    tp_lb_nm=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=200)#----------------profile area name
+    tp_lb_nm.grid(row=1,column=4)
 
-    pro =PIL.Image.open("images/user.png")
-    resized_pro= pro.resize((20,20))
-    pro_pic= ImageTk.PhotoImage(resized_pro)
-   
-    srh_btn = Button(tp_lb_npr, image=pro_pic, bg="White", fg="black",height=40,width=50,border=0)
-    srh_btn.grid(row=1,column=2)
-
-    Sys_top_frame2=Frame(root, height=10,bg="#213b52")
+    Sys_top_frame2=Frame(root, height=70,bg="#213b52")
     Sys_top_frame2.pack(fill=X,)
     
+    global cnv
+    cnv = Canvas(Sys_top_frame2, borderwidth=1,width=1355,height=645, bg="#2f516f")
+    frame = Frame(cnv)
+ 
+    hscrollbar = Scrollbar(Sys_top_frame2, orient="horizontal", command=cnv.xview)
+    hscrollbar.grid(row=1, column=0, sticky="nsew")
+
+    cnv.configure(xscrollcommand=hscrollbar.set)
+    cnv.grid(row=0, column=0, sticky="nsew")
     
-  
+    cnv.create_window((5,4), window=frame, anchor="nw", tags="frame")
+
+    tabsystem = ttk.Notebook(frame, width=100, height=100)
     s = ttk.Style()
     s.theme_use('default')
-    s.configure('TNotebook.Tab', background="#213b52",foreground="white", width=150,anchor="center", padding=5)
+    s.configure('TNotebook.Tab', background="#213b52",foreground="white", width=20,justify=CENTER, padding=5)
     s.map('TNotebook.Tab',background=[("selected","#2f516f")])
-    def right_nav():
-        
-        tabControl.pack_forget()
-        btn_nav.place_forget()
-        tabControl2.pack(expand = 1, fill ="both")
-        btn_nav2.place(x=0,y=0)
-        try:
-            btn_nav3.place_forget()
-        except:
-            pass
-    def left_nav():
-        
-        tabControl2.pack_forget()
-        btn_nav2.place_forget()
-        tabControl.pack(expand = 1, fill ="both")
-        global btn_nav3
-        btn_nav3=Button(Sys_top_frame2,text=">>", command=right_nav, width=3, bg="#213b52",fg="white")
-        btn_nav3.place(x=1325,y=0)
-
-    tabControl = ttk.Notebook(Sys_top_frame2)
+            
+    global tabControl
+    tabControl = ttk.Notebook(tabsystem)
     tab1 = ttk.Frame(tabControl)
     tab2 = ttk.Frame(tabControl)
     tab3=  ttk.Frame(tabControl)
@@ -183,148 +149,47 @@ def main_sign_in():
     tab6=  ttk.Frame(tabControl)
     tab7 = ttk.Frame(tabControl)
     tab8 = ttk.Frame(tabControl)
+    tab9 =  ttk.Frame(tabControl)
+    tab10=  ttk.Frame(tabControl)
+    tab11 = ttk.Frame(tabControl)
+    tab12=  ttk.Frame(tabControl)
+    tab13 = ttk.Frame(tabControl)
+    tab14 = ttk.Frame(tabControl)
+    tab15 =  ttk.Frame(tabControl)
     
-    
-    btn_nav=Button(Sys_top_frame2,text=">>", command=right_nav, width=3, bg="#213b52",fg="white")
-    btn_nav.place(x=1325,y=0)
     tabControl.add(tab1,compound = LEFT, text ='Dashboard',)
-    tabControl.add(tab2,compound = LEFT, text ='Banking')
+    tabControl.add(tab2,compound = LEFT, text ='Bancking')
     tabControl.add(tab3,compound = LEFT, text ='Sales')
     tabControl.add(tab4,compound = LEFT, text ='Expenses')
     tabControl.add(tab5,compound = LEFT, text ='Payroll') 
     tabControl.add(tab6,compound = LEFT, text ='Report')
     tabControl.add(tab7,compound = LEFT, text ='Taxes')
     tabControl.add(tab8,compound = LEFT, text ='Accounting')
-    
+    tabControl.add(tab9,compound = LEFT, text ='My Account')
+    tabControl.add(tab10,compound = LEFT, text ='Cash Management')
+    tabControl.add(tab11,compound = LEFT, text ='Production')
+    tabControl.add(tab12,compound = LEFT, text ='Quality Management')
+    tabControl.add(tab13,compound = LEFT, text ='Project Management')
+    tabControl.add(tab14,compound = LEFT, text ='Usage Decisions')
+    tabControl.add(tab15,compound = LEFT, text ='Account & Payable')
     tabControl.pack(expand = 1, fill ="both")
 
 
-    
-    tabControl2 = ttk.Notebook(Sys_top_frame2)
-    tab9 =  ttk.Frame(tabControl2)
-    tab10=  ttk.Frame(tabControl2)
-    tab11 = ttk.Frame(tabControl2)
-    tab12=  ttk.Frame(tabControl2)
-    tab13 = ttk.Frame(tabControl2)
-    tab14 = ttk.Frame(tabControl2)
-    tab15 =  ttk.Frame(tabControl2)
+    tabsystem.grid(row=0, column=0, sticky="ew")
 
-    btn_nav2=Button(Sys_top_frame2,text="<<", command=left_nav, width=3, bg="#213b52",fg="white")
-    
-        
-    tabControl2.add(tab9,compound = LEFT, text ='My Account')
-    tabControl2.add(tab10,compound = LEFT, text ='Cash Management')
-    tabControl2.add(tab11,compound = LEFT, text ='Production')
-    tabControl2.add(tab12,compound = LEFT, text ='Quality Management')
-    tabControl2.add(tab13,compound = LEFT, text ='Project Management')
-    tabControl2.add(tab14,compound = LEFT, text ='Usage Decisions')
-    tabControl2.add(tab15,compound = LEFT, text ='Account & Payable')
+    def frame_configure(event):
+        global cnv
+        cnv.configure(scrollregion=cnv.bbox("all"))
 
-   
-    #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Dash Board}
+    frame.bind("<Configure>", frame_configure)
+
+    
+
     Sys_mains_frame=Frame(tab1, height=750,bg="#2f516f")
     Sys_mains_frame.pack(fill=X)
 
-    #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333Banking Section(Tab2)
-
-    tab_bank = ttk.Notebook(tab2)
-    tab2_1 =  ttk.Frame(tab_bank)
-    tab2_2=  ttk.Frame(tab_bank)
-    tab2_3 = ttk.Frame(tab_bank)
-
-    tab_bank.add(tab2_1,compound = LEFT, text ='Online Banking')
-    tab_bank.add(tab2_2,compound = LEFT, text ='Offline banking')
-    tab_bank.add(tab2_3,compound = LEFT, text ='Bank Reconvilation')
-
     
-    tab_bank.pack(expand = 1, fill ="both")
 
-    #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Sales Tab}
-    tab_sales = ttk.Notebook(tab3)
-    tab3_1 =  ttk.Frame(tab_sales)
-    tab3_2=  ttk.Frame(tab_sales)
-    tab3_3 = ttk.Frame(tab_sales)
-    tab3_4=  ttk.Frame(tab_sales)
-
-    
-        
-    tab_sales.add(tab3_1,compound = LEFT, text ='Sales Records')
-    tab_sales.add(tab3_2,compound = LEFT, text ='Invoices')
-    tab_sales.add(tab3_3,compound = LEFT, text ='Customers')
-    tab_sales.add(tab3_4,compound = LEFT, text ='Product & Services')
- 
-    tab_sales.pack(expand = 1, fill ="both")
-
-    #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Expenses Tab}
-    tab_exp = ttk.Notebook(tab4)
-    tab4_1 =  ttk.Frame(tab_exp)
-    tab4_2=  ttk.Frame(tab_exp)
-    tab_exp.add(tab4_1,compound = LEFT, text ='Expenses')
-    tab_exp.add(tab4_2,compound = LEFT, text ='Supliers')
-    tab_exp.pack(expand = 1, fill ="both")
-    #33333333333333333333333333333333333333333333333333333333333333333333333333333333333{Pay Roll Tab}
-    tab_payroll = ttk.Notebook(tab5)
-    tab5_1 =  ttk.Frame(tab_payroll)
-    tab5_2=  ttk.Frame(tab_payroll)
-     
-    tab_payroll.add(tab5_1,compound = LEFT, text ='Employee')
-    tab_payroll.add(tab5_2,compound = LEFT, text ='Payslip')
-
-    tab_payroll.pack(expand = 1, fill ="both")
-
-    #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Report Tab}
-
-    tab_report = ttk.Notebook(tab6)
-    tab6_1 =  ttk.Frame(tab_report)
-    tab6_2=  ttk.Frame(tab_report)
-    tab6_3 = ttk.Frame(tab_report)
-    tab6_4=  ttk.Frame(tab_report)
-
-    
-        
-    tab_report.add(tab6_1,compound = LEFT, text ='Profit & Loss')
-    tab_report.add(tab6_2,compound = LEFT, text ='Balance Sheet')
-    tab_report.add(tab6_3,compound = LEFT, text ='Accounts Receivables')
-    tab_report.add(tab6_4,compound = LEFT, text ='Accounts Payables')
- 
-    tab_report.pack(expand = 1, fill ="both")
-
-    #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Taxes}
-
-    tab_tax = ttk.Notebook(tab7)
-    tab7_1 =  ttk.Frame(tab_tax)
-    tab7_2=  ttk.Frame(tab_tax)
-
-    tab_tax.add(tab7_1,compound = LEFT, text ='GST')
-    tab_tax.add(tab7_2,compound = LEFT, text ='New')
-
-    tab_tax.pack(expand = 1, fill ="both")
-
-    #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Accounting}
-    tab_account = ttk.Notebook(tab8)
-    tab8_1 =  ttk.Frame(tab_account)
-    tab8_2=  ttk.Frame(tab_account)
-
-    tab_account.add(tab8_1,compound = LEFT, text ='Chart Of Accounts')
-    tab_account.add(tab8_2,compound = LEFT, text ='Reconcile')
-   
- 
-    tab_account.pack(expand = 1, fill ="both")
-    #33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Cash Management}
-    tab_cash = ttk.Notebook(tab10)
-    
-    tab10_1 =  ttk.Frame(tab_cash)
-    tab10_2=  ttk.Frame(tab_cash)
-    tab10_3 = ttk.Frame(tab_cash)
-
-    tab_cash.add(tab10_1,compound = LEFT, text ='Cash Position')
-    tab_cash.add(tab10_2,compound = LEFT, text ='Cash Flow Analyzer')
-    tab_cash.add(tab10_3,compound = LEFT, text ='Check Cash Flow')
-
-    tab_cash.pack(expand = 1, fill ="both")
-    #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{My Account}
-    Sys_mains_frame=Frame(tab9, height=750,bg="#2f516f")
-    Sys_mains_frame.pack(fill=X)
 #----------------------------------------------------------------------------------Sign in frame in signup section
 def fun_sign_in():
     
@@ -435,7 +300,7 @@ def func_sign_up():
     
     
 
-    fst_nm = Entry(main_frame_signup, width=25, font=('Calibri 16'))
+    fst_nm = Entry(main_frame_signup, width=25,text="Firstname", font=('Calibri 16'))
     fst_nm.insert(0,"Firstname")
     fst_nm.bind("<Button-1>",nme)
     fst_nm.place(x=200,y=200)
@@ -465,10 +330,11 @@ def func_sign_up():
     sys_cf.bind("<Button-1>",nme5)
     sys_cf.place(x=200,y=450)
 
-    
+    # sig_up =PIL.Image.open("images/register.png")
+    # sign_up=ImageTk.PhotoImage(sig_up)
 
-    label = Label(main_frame_signup, image = sign_up,bg="#213b52", width=800,anchor="w")
-    label.place(x=730,y=200)
+    # label = Label(main_frame_signup, image = sign_up,bg="#213b52", width=500, justify=RIGHT)
+    # label.place(x=200,y=150)
     
     button_sign = customtkinter.CTkButton(master=main_frame_signup,text="Sign Up",bg="#213b52")
     button_sign.place(relx=0.2, rely=0.7) 
@@ -510,7 +376,7 @@ pass_ent.bind("<Button-1>",sig_pass)
 pass_ent.place(x=820,y=350)
 
 button = customtkinter.CTkButton(master=main_frame_signin,command=main_sign_in,text="Log In",bg="#213b52")
-button.place(relx=0.65, rely=0.58)
+button.place(relx=0.69, rely=0.58)
 
 #----------------------------------------------------------------------------------------left canvas
 lf_signup= Canvas(main_frame_signin,width=1500, height=1500)
