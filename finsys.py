@@ -1,4 +1,4 @@
-
+import matplotlib.pyplot as plt
 from calendar import c
 from cgitb import enable, reset, text
 from distutils import command
@@ -43,8 +43,8 @@ import PIL.Image
 from PIL import ImageGrab
 from PIL import ImageTk, Image, ImageFile
 import PIL.Image
-
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 # fbilldb = mysql.connector.connect(
 #     host="localhost", user="root", password="", database="fbilling", port="3306"
@@ -52,14 +52,14 @@ import PIL.Image
 # fbcursor = fbilldb.cursor()
 
 root=Tk()
-root.geometry("1366x768")
+root.geometry("1366x768+0+0")
 
 root.title("Fin sYs")
 
 p1 = PhotoImage(file = 'images/favicon.png')
 root.iconphoto(False, p1)
 
-#--------------------------------------------------------------------------------------------Images
+#-------------------------------------------------------------------------------------------------------------------------Images
 
 imgr1 =PIL.Image.open("images\logs.png")
 exprefreshIcon=ImageTk.PhotoImage(imgr1)
@@ -82,15 +82,15 @@ sig_up =PIL.Image.open("images/register.png")
 resized_sign_up= sig_up.resize((500,400))
 sign_up=ImageTk.PhotoImage(resized_sign_up)
 
-#--------------------------------------------------------------------------------------------Create Sign In customer
+#------------------------------------------------------------------------------------------------------------Login Button Function
 
 def main_sign_in():
     try:
-        main_frame_signup.destroy()
+        main_frame_signup.pack_forget()
     except:
         pass
     try:
-        main_frame_signin.destroy()
+        main_frame_signin.pack_forget()
     except:
         pass
     Sys_top_frame=Frame(root, height=70,bg="#213b52")
@@ -222,8 +222,154 @@ def main_sign_in():
 
    
     #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Dash Board}
-    Sys_mains_frame=Frame(tab1, height=750,bg="#2f516f")
+
+    Sys_mains_frame=Frame(tab1, height=750,bg="#2f516f",)
     Sys_mains_frame.pack(fill=X)
+
+    
+    canvas=Canvas(Sys_mains_frame,height=700,scrollregion=(0,0,700,1200),bg="#2f516f",border=0)
+    frame=Frame(canvas,bg="#2f516f")
+    myscrollbar=Scrollbar(Sys_mains_frame,orient="vertical",command=canvas.yview)
+    canvas.configure(yscrollcommand=myscrollbar.set)
+
+    myscrollbar.pack(side="right",fill="y")
+    canvas.pack(fill=X)
+    canvas.create_window((10,0),window=frame,anchor='nw')
+
+    #--------------------------------------------------------------------------------------------------------------Content head
+    cmpny_name_frm=Frame(frame,bg="#213b52",width=1300,height=60)
+    cmpny_name_frm.pack(pady=20)
+
+    cmp_name=Label(frame, text="Clown",bg="#213b52", fg="White",width=69, anchor="center",font=('Calibri 24 bold'))
+    cmp_name.place(x=60,y=27)
+    #-------------------------------------------------------------------------------------------------------Content bottam
+    das_btm_frm=Frame(frame,bg="#2f516f")
+    das_btm_frm.pack(pady=10)
+    #----------------------------------------------------------------------------------------------------Profit And Loss
+    das_btm1=Frame(das_btm_frm,bg="#213b52",height=500,width=420)
+    das_btm1.grid(row=1,column=1,padx=10,pady=10)
+
+    cmp_name=Label(das_btm1, text="PROFIT AND LOSS",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    cmp_name.grid(row=1,column=1)
+    # cmp_name=Label(das_btm1, text="__________________________________________________",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    # cmp_name.place(x=10,y=30)
+
+    figlast = plt.figure(figsize=(8, 4), dpi=50)
+
+    x="Income"
+    y=10 
+    plt.barh(x,y, label="Undefined", color="blue") 
+    plt.legend()
+  
+    plt.ylabel("")
+    axes=plt.gca()
+    axes.xaxis.grid()
+
+    x="Expense"
+    y=100
+    plt.barh(x,y, color="red") 
+    plt.legend()
+ 
+    plt.ylabel("")
+    axes=plt.gca()
+    axes.xaxis.grid()
+              
+
+    canvasbar = FigureCanvasTkAgg(figlast, master=das_btm1)
+    canvasbar
+    canvasbar.draw()
+    canvasbar.get_tk_widget().grid(row=2,column=1,padx=5,pady=135)
+  
+
+    #--------------------------------------------------------------------------------------------------------card2
+
+    das_btm2=Frame(das_btm_frm,bg="#213b52",height=500,width=420)
+    das_btm2.grid(row=1,column=2,padx=10,pady=10)
+
+    cmp_name=Label(das_btm2, text="Expenses:2000",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    cmp_name.grid(row=1,column=1)
+
+    stockListExp = ['AMZN' , 'AAPL', 'JETS', 'CCL', 'NCLH']
+    stockSplitExp = [15,25,40,10,10]
+
+    fig = Figure(figsize=(4.3, 4.65)) # create a figure object
+    ax = fig.add_subplot(111) # add an Axes to the figure
+
+    ax.pie(stockSplitExp, radius=1, labels=stockListExp,autopct='%0.2f%%', shadow=True,)
+
+    chart1 = FigureCanvasTkAgg(fig,das_btm2)
+    chart1.get_tk_widget().grid(row=2,column=1)
+  
+    #----------------------------------------------------------------------------------------------------Card 3
+    das_btm3=Frame(das_btm_frm,bg="#213b52",height=500,width=420)
+    das_btm3.grid(row=1,column=3,padx=10,pady=10)
+    # cmp_name=Label(das_btm3, text="Banknbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb Accounts",bg="#213b52", fg="White",font=('Calibri 16 bold'))
+    # cmp_name.grid(row=1,column=1)
+
+    das_btm4=Frame(das_btm_frm,bg="#213b52",height=500,width=420)
+    das_btm4.grid(row=2,column=1,padx=10,pady=10)
+
+    #--------------------------------------------------------------------------------------------------card5
+    das_btm5=Frame(das_btm_frm,bg="#213b52",height=500,width=420)
+    das_btm5.grid(row=2,column=2,padx=10,pady=10)
+
+    cmp_name=Label(das_btm5, text="PROFIT AND LOSS",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    cmp_name.grid(row=1,column=1)
+    # cmp_name=Label(das_btm5, text="__________________________________________________",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    # cmp_name.place(x=10,y=30)
+
+    figlast = plt.figure(figsize=(8, 4), dpi=50)
+
+    x="Unpaid"
+    y=10 
+    plt.barh(x,y, label="Undefined", color="blue") 
+    plt.legend()
+  
+    plt.ylabel("")
+    axes=plt.gca()
+    axes.xaxis.grid()
+
+    x="Paid"
+    y=100
+    plt.barh(x,y, color="red") 
+    plt.legend()
+ 
+    plt.ylabel("")
+    axes=plt.gca()
+    axes.xaxis.grid()
+              
+
+    canvasbar = FigureCanvasTkAgg(figlast, master=das_btm5)
+    canvasbar
+    canvasbar.draw()
+    canvasbar.get_tk_widget().grid(row=2,column=1,padx=5,pady=135)
+
+    #------------------------------------------------------------------------------------------------------------------Card6
+
+    das_btm6=Frame(das_btm_frm,bg="#213b52",height=500,width=420)
+    das_btm6.grid(row=2,column=3,padx=10,pady=10)
+
+    cmp_name=Label(das_btm6, text="PROFIT AND LOSS",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    cmp_name.grid(row=1,column=1)
+    # cmp_name=Label(das_btm6, text="__________________________________________________",bg="#213b52", fg="White", anchor="nw",font=('Calibri 16 bold'))
+    # cmp_name.place(x=10,y=30)
+
+    figlast = plt.figure(figsize=(8, 4), dpi=50)
+
+    x="Income"
+    y=10 
+    plt.barh(x,y, label="Undefined", color="blue") 
+    plt.legend()
+  
+    plt.ylabel("")
+    axes=plt.gca()
+    axes.xaxis.grid()
+
+    canvasbar = FigureCanvasTkAgg(figlast, master=das_btm6)
+    canvasbar
+    canvasbar.draw()
+    canvasbar.get_tk_widget().grid(row=2,column=1,padx=5,pady=135)
+    
 
     #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333Banking Section(Tab2)
 
@@ -325,10 +471,190 @@ def main_sign_in():
     #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{My Account}
     Sys_mains_frame=Frame(tab9, height=750,bg="#2f516f")
     Sys_mains_frame.pack(fill=X)
-#----------------------------------------------------------------------------------Sign in frame in signup section
+
+#---------------------------------------------------------------------------------------------------------------Company Second Portion
+def cmpny_crt2():
+    main_frame_cmpny.pack_forget()
+    global main_frame_cmpny2
+    main_frame_cmpny2=Frame(root, height=750,bg="#213b52")
+    main_frame_cmpny2.pack(fill=X,)
+
+    cmpny_dt_frm2=Frame(main_frame_cmpny2, height=650, width=500,bg="white")
+    cmpny_dt_frm2.pack(pady=105)
+
+    def name_ent2(event):
+        if nm_nm2.get()=="Legal Business Name":
+            nm_nm2.delete(0,END)
+        else:
+            pass
+
+
+    cmpny_hd=Label(cmpny_dt_frm2, text="Let's Start Building Your FinsYs",font=('Calibri 30 bold'),bg="white", fg="black")
+    cmpny_hd.pack(padx=100,pady=20)
+
+    
+
+    nm_nm2 = Entry(cmpny_dt_frm2, width=30, font=('Calibri 16'),borderwidth=2)
+    nm_nm2.insert(0,"Legal Business Name")
+    nm_nm2.bind("<Button-1>",name_ent2)
+    nm_nm2.pack(padx=100,pady=15)
+
+    cmp_lbl1=Label(cmpny_dt_frm2, text="Your Industry",font=('Calibri 12'),bg="white" ,fg="black")
+    cmp_lbl1.place(x=180,y=143)
+
+    invset_bg_var = StringVar()
+    cmpny_cntry = ttk.Combobox(cmpny_dt_frm2,textvariable=invset_bg_var,width=29,font=('Calibri 16'))
+    cmpny_cntry.pack(padx=100,pady=15)
+    cmpny_cntry['values'] = ('Accounting Services','Consultants, doctors, Lawyers and similar','Information Tecnology','Manufacturing','Professional, Scientific and Technical Services','Restaurant/Bar and similar','Retail and Smilar','Other Finanacial Services')
+    cmpny_cntry.current(0)
+
+    cmp_lbl2=Label(cmpny_dt_frm2, text="Company type",font=('Calibri 12'),bg="white" ,fg="black")
+    cmp_lbl2.place(x=180,y=205)
+
+    invset_bg_var = StringVar()
+    cmpny_cntry = ttk.Combobox(cmpny_dt_frm2,textvariable=invset_bg_var,width=29,font=('Calibri 16'))
+    cmpny_cntry.pack(padx=100,pady=15)
+    cmpny_cntry['values'] = ('Private Limited Company','Public Limited Company','Joint-Venture Company','Partnership Firm Company','One Person Company','Branch Office Company','Non Government Organization')
+    cmpny_cntry.current(0)
+    
+    cmp_lbl3=Label(cmpny_dt_frm2, text="Do you have an Accountant, Bookkeeper or Tax Pro ?",font=('Calibri 12'),bg="white" ,fg="black")
+    cmp_lbl3.place(x=180,y=267)
+
+    bs_cus_ct=StringVar()
+    r1=Radiobutton(cmpny_dt_frm2, text = "Yes", variable = bs_cus_ct, value ="Yes",font=('Calibri 16'),bg="white")
+    r1.select()
+    r1.pack(padx=100,pady=(20,10))
+
+    r1=Radiobutton(cmpny_dt_frm2, text = "No", variable = bs_cus_ct, value ="No",font=('Calibri 16'),bg="white")
+    r1.select()
+    r1.pack(padx=100,pady=(0,20))
+
+
+    cmp_lbl4=Label(cmpny_dt_frm2, text="How do you like to get paid?",font=('Calibri 12'),bg="white" ,fg="black")
+    cmp_lbl4.place(x=180,y=391)
+    
+    invset_bg_var = StringVar()
+    cmpny_cntry = ttk.Combobox(cmpny_dt_frm2,textvariable=invset_bg_var,width=29,font=('Calibri 16'))
+    cmpny_cntry.pack(padx=100,pady=(15,70))
+    cmpny_cntry['values'] = ('Cash','Cheque','Credit card/Debit card','Bank Transfer','Paypal/Other service')
+    cmpny_cntry.current(0)
+
+    button_cmp2 = customtkinter.CTkButton(master=cmpny_dt_frm2,command=cmpny_crt1,text="Previous",bg="#213b52")
+    button_cmp2.place(x=215,y=470)
+    button_cmp2 = customtkinter.CTkButton(master=cmpny_dt_frm2,command=fun_sign_in,text="Submit",bg="#213b52")
+    button_cmp2.place(x=360,y=470)
+#-------------------------------------------------------------------------------------------------------------------company creation
+def cmpny_crt1():
+    try:
+        main_frame_cmpny2.pack_forget()
+    except:
+        pass
+    try:
+        main_frame_signup.pack_forget()
+    except:
+        pass
+    global main_frame_cmpny
+    main_frame_cmpny=Frame(root, height=750,bg="#213b52")
+    main_frame_cmpny.pack(fill=X,)
+
+    cmpny_dt_frm=Frame(main_frame_cmpny, height=650, width=500,bg="white")
+    cmpny_dt_frm.pack(pady=50)
+
+    def name_ent(event):
+        if nm_nm.get()=="Company Name":
+            nm_nm.delete(0,END)
+        else:
+            pass
+
+    def cmp_add(event):
+        if cmp_cmpn.get()=="Company Address":
+                cmp_cmpn.delete(0,END)
+        else:
+            pass
+    def cty_ent(event):
+        if cmp_cty.get()=="City":
+            cmp_cty.delete(0,END)
+        else:
+            pass
+
+    def em_ent(event):
+        if cmp_email.get()=="Email":
+                cmp_email.delete(0,END)
+        else:
+            pass
+    def ph_ent(event):
+        if cmp_ph.get()=="Phone Number":
+            cmp_ph.delete(0,END)
+        else:
+            pass
+
+    def fil_ent(event):
+        
+        cmp_logo = askopenfilename(filetypes=(("png file ",'.png'),('PDF', '*.pdf',),("jpg file", ".jpg"),  ("All files", "*.*"),))
+        
+        cmp_files.delete(0,END)
+        cmp_files.insert(0,cmp_logo)
+    
+
+    cmpny_hd=Label(cmpny_dt_frm, text="We're Happy you're Here!",font=('Calibri 30 bold'),bg="white", fg="black")
+    cmpny_hd.pack(padx=100,pady=20)
+
+    nm_nm = Entry(cmpny_dt_frm, width=30, font=('Calibri 16'),borderwidth=2)
+    nm_nm.insert(0,"Company Name")
+    nm_nm.bind("<Button-1>",name_ent)
+    nm_nm.pack(padx=100,pady=15)
+
+    cmp_cmpn = Entry(cmpny_dt_frm, width=30, font=('Calibri 16'),borderwidth=2)
+    cmp_cmpn.insert(0,"Company Address")
+    cmp_cmpn.bind("<Button-1>",cmp_add)
+    cmp_cmpn.pack(padx=100,pady=15)
+
+    cmp_cty = Entry(cmpny_dt_frm, width=30, font=('Calibri 16'),borderwidth=2)
+    cmp_cty.insert(0,"City")
+    cmp_cty.bind("<Button-1>",cty_ent)
+    cmp_cty.pack(padx=100,pady=15)
+
+    invset_bg_var = StringVar()
+    cmpny_cntry = ttk.Combobox(cmpny_dt_frm,textvariable=invset_bg_var,width=29,font=('Calibri 16'))
+    cmpny_cntry.pack(padx=100,pady=15)
+    cmpny_cntry['values'] = ('Default','Black','Maroon','Green','Olive','Navy','Purple','Teal','Gray','Silver','Red','Lime','Yellow','Blue','Fuchsia','Aqua','White','ScrollBar','Background','ActiveCaption','InactiveCaption','Menu','Window','WindowFrame','MenuText','WindowText','CaptionText','ActiveBorder','InactiveBorder','AppWorkSpace','Highlight','HighlightText','BtnFace','InactiveCaptionText','BtnHighlight','3DDkShadow','3DLight','InfoText','InfoBk','Custom')
+    cmpny_cntry.current(0)
+
+    cmp_pin = Spinbox(cmpny_dt_frm,from_=1,to=1000000,width=29, font=('Calibri 16'),borderwidth=2)
+    cmp_pin.delete(0,END)
+    cmp_pin.insert(0,"Pincode")
+    cmp_pin.pack(padx=100,pady=15)
+   
+
+    cmp_email = Entry(cmpny_dt_frm, width=30, font=('Calibri 16'),borderwidth=2)
+    cmp_email.insert(0,"Email")
+    cmp_email.bind("<Button-1>",em_ent)
+    cmp_email.pack(padx=100,pady=15)
+
+    cmp_ph = Entry(cmpny_dt_frm, width=30, font=('Calibri 16'),borderwidth=2)
+    cmp_ph.insert(0,"Phone Number")
+    cmp_ph.bind("<Button-1>",ph_ent)
+    cmp_ph.pack(padx=100,pady=15)
+
+    cmp_files = Entry(cmpny_dt_frm, width=30, font=('Calibri 16'),borderwidth=2)
+    cmp_files.insert(0,"No file Chosen")
+    cmp_files.bind("<Button-1>",fil_ent)
+    cmp_files.pack(padx=100,pady=15)
+
+    button = customtkinter.CTkButton(master=cmpny_dt_frm,command=cmpny_crt2,text="Next",bg="#213b52")
+    button.pack(padx=100,pady=10)
+    
+#--------------------------------------------------------------------------------------------------------Sign in frame in signup section
 def fun_sign_in():
     
-    main_frame_signup.destroy()
+    try:
+        main_frame_signup.pack_forget()
+    except:
+        pass
+    try:
+        main_frame_cmpny2.pack_forget()
+    except:
+        pass
     global main_frame_signin
     main_frame_signin=Frame(root, height=750)
     main_frame_signin.pack(fill=X,)
@@ -379,10 +705,11 @@ def fun_sign_in():
     btn2.place(x=275,y=130)
 
 
-#-----------------------------------------------------------------------------------Sign Up Section
+#---------------------------------------------------------------------------------------------------------------------Sign Up Section
 def func_sign_up():
+    
     global main_frame_signup
-    main_frame_signin.destroy()
+    main_frame_signin.pack_forget()
 
     main_frame_signup=Frame(root, height=750)
     main_frame_signup.pack(fill=X,)
@@ -463,14 +790,14 @@ def func_sign_up():
     sys_cf = Entry(main_frame_signup, width=25, font=('Calibri 16'))
     sys_cf.insert(0,"Confirm Password")
     sys_cf.bind("<Button-1>",nme5)
-    sys_cf.place(x=200,y=450)
+    sys_cf.place(x=200,y=400)
 
     
 
     label = Label(main_frame_signup, image = sign_up,bg="#213b52", width=800,anchor="w")
     label.place(x=730,y=200)
     
-    button_sign = customtkinter.CTkButton(master=main_frame_signup,text="Sign Up",bg="#213b52")
+    button_sign = customtkinter.CTkButton(master=main_frame_signup, command=cmpny_crt1,text="Sign Up",bg="#213b52")
     button_sign.place(relx=0.2, rely=0.7) 
 
     lft_lab=Label(main_frame_signup, text="One of us ?",font=('Calibri 20 bold'), fg="white", bg="#213b52")
@@ -512,7 +839,7 @@ pass_ent.place(x=820,y=350)
 button = customtkinter.CTkButton(master=main_frame_signin,command=main_sign_in,text="Log In",bg="#213b52")
 button.place(relx=0.65, rely=0.58)
 
-#----------------------------------------------------------------------------------------left canvas
+#------------------------------------------------------------------------------------------------------------------------left canvas
 lf_signup= Canvas(main_frame_signin,width=1500, height=1500)
 lf_signup.place(x=-700,y=0)
 
