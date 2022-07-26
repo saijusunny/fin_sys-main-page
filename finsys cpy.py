@@ -352,11 +352,21 @@ def main_sign_in():
             # myscrollbar.pack_forget()
             # Sys_mains_frame.pack_forget()
             global Sys_mains_frame_pr
+            def responsive_widgets(event):
+                dwidth = event.width
+                dheight = event.height
+                dcanvas = event.widget
+
+                dcanvas.coords("my_pro",dwidth/2.3,dheight/12.5)
+                dcanvas.coords("pr_hd",dwidth/20,dheight/2.2)
+                
+                    
             Sys_mains_frame_pr=Frame(tab1, height=750,bg="#2f516f",)
             Sys_mains_frame_pr.place(x=0,y=0)
 
             pr_canvas=Canvas(Sys_mains_frame_pr,height=700,width=1340,scrollregion=(0,0,700,1300),bg="#2f516f",border=0)
-            
+            pr_canvas.bind("<Configure>", responsive_widgets)
+
             pr_myscrollbar=Scrollbar(Sys_mains_frame_pr,orient="vertical",command=pr_canvas.yview)
             pr_canvas.configure(yscrollcommand=pr_myscrollbar.set)
 
@@ -365,13 +375,13 @@ def main_sign_in():
 
             rth2 = curve_pr(50, 50, 1290, 1300, radius=20, fill="#213b52")
 
-            grd1=Label(pr_canvas, text="MY PROFILE",bg="#213b52", fg="White", anchor="center",font=('Calibri 24 bold'))
-            win_inv1 = pr_canvas.create_window(600, 50, anchor="nw", window=grd1)
+            grd1c=Label(pr_canvas, text="MY PROFILE",bg="#213b52", fg="White", anchor="center",font=('Calibri 24 bold'))
+            win_inv1 = pr_canvas.create_window(0, 0, anchor="nw", window=grd1c,tags=("my_pro"))
 
             pr_canvas.create_line(60,300, 1280, 300,fill="gray" )
             #----------------------------------------------------------------------------------------Personal info
             pr_hd=Label(pr_canvas, text="Personal Info",bg="#213b52", fg="White", anchor="center",font=('Calibri 18 bold'))
-            win_pr = pr_canvas.create_window(60, 320, anchor="nw", window=pr_hd)
+            win_pr = pr_canvas.create_window(0, 0, anchor="nw", window=pr_hd,tags=("pr_hd"))
 
             pr_inf=Label(pr_canvas, text="First Name",bg="#213b52", fg="White", anchor="center",font=('Calibri 14 bold'))
             win_info = pr_canvas.create_window(80, 370, anchor="nw", window=pr_inf)
