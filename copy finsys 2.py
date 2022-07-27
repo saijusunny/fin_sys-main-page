@@ -102,17 +102,15 @@ def main_sign_in():
         main_frame_signin.pack_forget()
     except:
         pass
-    Sys_top_frame=Frame(root,bg="#213b52")
-    Sys_top_frame.grid(row=1,column=0,sticky='nsew')
-    Sys_top_frame.grid_rowconfigure(0,weight=1)
-    Sys_top_frame.grid_columnconfigure(0,weight=1)
+    Sys_top_frame=Frame(root, height=70,bg="#213b52")
+    Sys_top_frame.pack(fill=X,)
 
-    
+    Sys_top_frame.grid_columnconfigure(0,weight=1)
+    Sys_top_frame.grid_rowconfigure(0,weight=1)
+
     #---------------------------------------------------------------------------------------Top Menu
-    tp_lb_nm=LabelFrame(Sys_top_frame,bg="#213b52")#-----------------------------Logo Name Frame
+    tp_lb_nm=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=400)#-----------------------------Logo Name Frame
     tp_lb_nm.grid(row=1,column=1,sticky='nsew')
-    tp_lb_nm.grid_rowconfigure(0,weight=1)
-    tp_lb_nm.grid_columnconfigure(0,weight=1)
 
     label = Label(tp_lb_nm, image = mai_logo,height=70,bg="#213b52",border=0)
     label.grid(row=2,column=1,sticky='nsew')
@@ -124,11 +122,8 @@ def main_sign_in():
 
     
 
-    tp_lb_srh=LabelFrame(Sys_top_frame,bg="#213b52")#-------------------------Serch area Frame
+    tp_lb_srh=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=700)#-------------------------Serch area Frame
     tp_lb_srh.grid(row=1,column=2,sticky='nsew')
-    tp_lb_srh.grid_rowconfigure(0,weight=1)
-    tp_lb_srh.grid_columnconfigure(0,weight=1)
-
     def srh_fn(event):
         if srh_top.get()=="Search":
             srh_top.delete(0,END)
@@ -146,18 +141,11 @@ def main_sign_in():
     srh_btn = Button(tp_lb_srh, image=stn_img, bg="#213b52", fg="black",border=0)
     srh_btn.grid(row=2,column=5,padx=(0,30))
 
-    tp_lb_nm=LabelFrame(Sys_top_frame,bg="#213b52")#-----------------------------Notification
+    tp_lb_nm=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=100)#-----------------------------Notification
     tp_lb_nm.grid(row=1,column=3,sticky='nsew')
-    tp_lb_nm.grid_rowconfigure(0,weight=1)
-    tp_lb_nm.grid_columnconfigure(0,weight=1)
-    srh_btn = Button(tp_lb_nm, image=stn_img, bg="#213b52", fg="black",border=0)
-    srh_btn.grid(row=0,column=0,padx=35)
     
-    tp_lb_npr=LabelFrame(Sys_top_frame,bg="#213b52")#---------------------------profile area name
+    tp_lb_npr=LabelFrame(Sys_top_frame,height=70,bg="#213b52",width=200)#---------------------------profile area name
     tp_lb_npr.grid(row=1,column=4,sticky='nsew')
-    tp_lb_npr.grid_rowconfigure(0,weight=1)
-    tp_lb_npr.grid_columnconfigure(0,weight=1)
-
     label = Label(tp_lb_npr, text="Errors",bg="#213b52", fg="white", anchor="center",width=10,font=('Calibri 16 bold'),border=0)
     label.grid(row=1,column=1,sticky='nsew')
     label = Label(tp_lb_npr, text="Online",bg="#213b52", fg="white",width=15,font=('Calibri 12 bold'),border=0)
@@ -262,13 +250,11 @@ def main_sign_in():
                 dcanvas.coords("cmp_typ_ent",dwidth/1.92,dheight/.64)
                 dcanvas.coords("btn_edit",dwidth/2.4,dheight/.57)
            
-            Sys_mains_frame_pr.grid_forget()
+            Sys_mains_frame_pr.place_forget()
 
             global Sys_mains_frame_pr_ed
             Sys_mains_frame_pr_ed=Frame(tab1, height=750)
-            Sys_mains_frame_pr_ed.grid(row=0,column=0,sticky='nsew')
-            Sys_mains_frame_pr_ed.grid_rowconfigure(0,weight=1)
-            Sys_mains_frame_pr_ed.grid_columnconfigure(0,weight=1)
+            Sys_mains_frame_pr_ed.place(x=0,y=0)
             
 
             pr_canvas_ed=Canvas(Sys_mains_frame_pr_ed,height=700,width=1340,scrollregion=(0,0,700,1450),bg="#2f516f",border=0)
@@ -439,10 +425,9 @@ def main_sign_in():
         lst_prf.place_forget()
         if selected_langs=="Profile":
             
-            Sys_mains_frame.grid_forget()
+            Sys_mains_frame.pack_forget()
             global Sys_mains_frame_pr
-            def pr_responsive_widgets(event):
-                
+            def responsive_widgets(event):
                 dwidth = event.width
                 dheight = event.height
                 dcanvas = event.widget
@@ -477,7 +462,9 @@ def main_sign_in():
                 x1,y1 + r1,
                 x1,y1,
                 )                   
- 
+
+                
+                
                 dcanvas.coords("my_pro",dwidth/2.3,dheight/12.5)
 
                 dcanvas.coords("pr_hr_l",dwidth/16,dheight/7,dwidth/1.07,dheight/7)
@@ -518,17 +505,23 @@ def main_sign_in():
                 dcanvas.coords("cmp_typ_ent",dwidth/1.92,dheight/.755)
                 dcanvas.coords("btn_edit",dwidth/2.4,dheight/.71)
                 
-       
-            Sys_mains_frame_pr=Frame(tab1,bg="#2f516f",)
-            Sys_mains_frame_pr.grid(row=0,column=0,sticky='nsew')
-            Sys_mains_frame_pr.grid_rowconfigure(0,weight=1)
-            Sys_mains_frame_pr.grid_columnconfigure(0,weight=1)
+                
 
-            pr_canvas=Canvas(Sys_mains_frame_pr,scrollregion=(0,0,700,1300),bg="#2f516f",border=0)
-            pr_canvas.bind("<Configure>", pr_responsive_widgets)
+                
+                    
+            Sys_mains_frame_pr=Frame(tab1, height=750,bg="#2f516f",)
+            Sys_mains_frame_pr.place(x=0,y=0)
+            # Sys_mains_frame_pr.grid_rowconfigure(0,weight=1)
+            # Sys_mains_frame_pr.grid_columnconfigure(0,weight=1)
+
+            pr_canvas=Canvas(Sys_mains_frame_pr,height=700,width=1340,scrollregion=(0,0,700,1300),bg="#2f516f",border=0)
+            pr_canvas.bind("<Configure>", responsive_widgets)
 
             pr_myscrollbar=Scrollbar(Sys_mains_frame_pr,orient="vertical",command=pr_canvas.yview)
             pr_canvas.configure(yscrollcommand=pr_myscrollbar.set)
+
+            Sys_mains_frame_pr.grid_rowconfigure(0,weight=1)
+            Sys_mains_frame_pr.grid_columnconfigure(0,weight=1)
 
             pr_myscrollbar.grid(row=0,column=1,sticky='ns')
             pr_canvas.grid(row=0,column=0,sticky='nsew')
@@ -637,22 +630,22 @@ def main_sign_in():
             win_info1 = pr_canvas.create_window(0, 0, anchor="nw", window=btn_edit,tag=("btn_edit"))
         elif selected_langs=="Log Out":
             
-            Sys_top_frame2.grid_forget()
-            Sys_top_frame.grid_forget()
+            Sys_top_frame2.pack_forget()
+            Sys_top_frame.pack_forget()
             fun_sign_in()
         elif selected_langs== "Dashboard":
             try:
-                Sys_mains_frame_pr_ed.grid_forget()
+                Sys_mains_frame_pr_ed.place_forget()
             except:
                 pass
             try:
                 
-                Sys_mains_frame_pr.grid_forget()
+                Sys_mains_frame_pr.place_forget()
             except:
                 pass
            
             try:
-                Sys_mains_frame.grid(row=0,column=0,sticky='nsew')
+                Sys_mains_frame.pack(fill=X)
             except:
                 pass
          
@@ -677,20 +670,20 @@ def main_sign_in():
     srh_btn = Button(tp_lb_npr, bg="White", fg="black",height=2,width=5,border=0,command=profile)
     srh_btn.grid(row=2,column=2,padx=15)
 
-    Sys_top_frame2=Frame(root,bg="#213b52")
-    Sys_top_frame2.grid(row=2,column=0,sticky='nsew')
-    Sys_top_frame2.grid_rowconfigure(0,weight=1)
-    Sys_top_frame2.grid_columnconfigure(0,weight=1)
+    Sys_top_frame2=Frame(root, height=10,bg="#213b52")
+    Sys_top_frame2.pack(fill=X)
     
+    
+  
     s = ttk.Style()
     s.theme_use('default')
-    s.configure('TNotebook.Tab', background="#213b52",foreground="white", width=26,anchor="center", padding=5)
+    s.configure('TNotebook.Tab', background="#213b52",foreground="white", width=150,anchor="center", padding=5)
     s.map('TNotebook.Tab',background=[("selected","#2f516f")])
     def right_nav():
         
-        tabControl.grid_forget()
+        tabControl.pack_forget()
         btn_nav.place_forget()
-        tabControl2.grid(row=0,column=0,sticky='nsew')
+        tabControl2.pack(expand = 1, fill ="both")
         btn_nav2.place(x=0,y=0)
         try:
             btn_nav3.place_forget()
@@ -698,9 +691,9 @@ def main_sign_in():
             pass
     def left_nav():
         
-        tabControl2.grid_forget()
+        tabControl2.pack_forget()
         btn_nav2.place_forget()
-        tabControl.grid(row=0,column=0,sticky='nsew')
+        tabControl.pack(expand = 1, fill ="both")
         global btn_nav3
         btn_nav3=Button(Sys_top_frame2,text=">>", command=right_nav, width=3, bg="#213b52",fg="white")
         btn_nav3.place(x=1325,y=0)
@@ -727,8 +720,8 @@ def main_sign_in():
     tabControl.add(tab7,compound = LEFT, text ='Taxes')
     tabControl.add(tab8,compound = LEFT, text ='Accounting')
     
-    tabControl.grid(row=0,column=0,sticky='nsew')
-    
+    tabControl.pack(expand = 1, fill ="both")
+
 
     
     tabControl2 = ttk.Notebook(Sys_top_frame2)
@@ -753,136 +746,18 @@ def main_sign_in():
 
    
     #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Dash Board}
-    tab1.grid_columnconfigure(0,weight=1)
-    tab1.grid_rowconfigure(0,weight=1)
-
-    Sys_mains_frame=Frame(tab1,bg="#2f516f",)
-    Sys_mains_frame.grid(row=0,column=0,sticky='nsew')
-
-    Sys_mains_frame.grid_rowconfigure(0,weight=1)
-    Sys_mains_frame.grid_columnconfigure(0,weight=1)
     
-    def responsive_widgets(event):
-        dwidth = event.width
-        dheight = event.height
-        dcanvas = event.widget
-        dcanvas.coords("line1", dwidth/31.6, dheight/2.002, dwidth/1.039, dheight/2.002)
-        dcanvas.coords("line17", dwidth/31.6, dheight/2.002, dwidth/31.6, dheight/1.274)
-        dcanvas.coords("line2", dwidth/31.6, dheight/1.797, dwidth/1.039, dheight/1.797)
-        dcanvas.coords("line3", dwidth/1.039, dheight/2.002, dwidth/1.039, dheight/1.274)
-        dcanvas.coords("line4", dwidth/31.6, dheight/1.63, dwidth/1.039, dheight/1.63)
-        dcanvas.coords("line5", dwidth/31.6, dheight/1.491, dwidth/1.039, dheight/1.491)
-        dcanvas.coords("line6", dwidth/31.6, dheight/1.374, dwidth/1.039, dheight/1.374)
-        dcanvas.coords("line7", dwidth/31.6, dheight/1.274, dwidth/1.039, dheight/1.274)
-        dcanvas.coords("line8", dwidth/7.92, dheight/2.002, dwidth/7.92, dheight/1.274)
-        dcanvas.coords("line9", dwidth/4.22, dheight/2.002, dwidth/4.22, dheight/1.274)
-        dcanvas.coords("line10", dwidth/3.2, dheight/2.002, dwidth/3.2, dheight/1.274)
-        dcanvas.coords("line11", dwidth/2.3, dheight/2.002, dwidth/2.3, dheight/1.274)
-        dcanvas.coords("line12", dwidth/1.9, dheight/2.002, dwidth/1.9, dheight/1.274)
-        dcanvas.coords("line13", dwidth/1.6, dheight/2.002, dwidth/1.6, dheight/1.274)
-        dcanvas.coords("line14", dwidth/1.38, dheight/2.002, dwidth/1.38, dheight/1.274)
-        dcanvas.coords("line15", dwidth/1.28, dheight/2.002, dwidth/1.28, dheight/1.274)
-        dcanvas.coords("line16", dwidth/1.14, dheight/2.002, dwidth/1.14, dheight/1.274)
-
-        r1 = 25
-        x1 = dwidth/63
-        x2 = dwidth/1.021
-        y1 = dheight/14 
-        y2 = dheight/3.505
-
-        dcanvas.coords("poly1",x1 + r1,y1,
-        x1 + r1,y1,
-        x2 - r1,y1,
-        x2 - r1,y1,     
-        x2,y1,     
-        #--------------------
-        x2,y1 + r1,     
-        x2,y1 + r1,     
-        x2,y2 - r1,     
-        x2,y2 - r1,     
-        x2,y2,
-        #--------------------
-        x2 - r1,y2,     
-        x2 - r1,y2,     
-        x1 + r1,y2,
-        x1 + r1,y2,
-        x1,y2,
-        #--------------------
-        x1,y2 - r1,
-        x1,y2 - r1,
-        x1,y1 + r1,
-        x1,y1 + r1,
-        x1,y1,
-        )
-
-        dcanvas.coords("hline",dwidth/21,dheight/4.67,dwidth/1.055,dheight/4.67)
-        
-        r2 = 25
-        x11 = dwidth/63
-        x21 = dwidth/1.021
-        y11 = dheight/2.8
-        y21 = dheight/1.168
-
-
-        dcanvas.coords("poly2",x11 + r2,y11,
-        x11 + r2,y11,
-        x21 - r2,y11,
-        x21 - r2,y11,     
-        x21,y11,     
-        #--------------------
-        x21,y11 + r2,     
-        x21,y11 + r2,     
-        x21,y21 - r2,     
-        x21,y21 - r2,     
-        x21,y21,
-        #--------------------
-        x21 - r2,y21,     
-        x21 - r2,y21,     
-        x11 + r2,y21,
-        x11 + r2,y21,
-        x11,y21,
-        #--------------------
-        x11,y21 - r2,
-        x11,y21 - r2,
-        x11,y11 + r2,
-        x11,y11 + r2,
-        x11,y11,
-        )
-
-        dcanvas.coords("label1",dwidth/2,dheight/8.24)
-        dcanvas.coords("label2",dwidth/12.67,dheight/1.71)
-        dcanvas.coords("label3",dwidth/5.5,dheight/1.71)
-        dcanvas.coords("label4",dwidth/3.63,dheight/1.71)
-        dcanvas.coords("label5",dwidth/2.67,dheight/1.71)
-        dcanvas.coords("label6",dwidth/2.08,dheight/1.71)
-        dcanvas.coords("label7",dwidth/1.735,dheight/1.71)
-        dcanvas.coords("label8",dwidth/1.48,dheight/1.71)
-        dcanvas.coords("label9",dwidth/1.327,dheight/1.71)
-        dcanvas.coords("label10",dwidth/1.206,dheight/1.71)
-        
-        dcanvas.coords("label11",dwidth/12.67,dheight/1.894)
-        dcanvas.coords("label12",dwidth/5.5,dheight/1.894)
-        dcanvas.coords("label13",dwidth/3.63,dheight/1.894)
-        dcanvas.coords("label14",dwidth/2.67,dheight/1.894)
-        dcanvas.coords("label15",dwidth/2.08,dheight/1.894)
-        dcanvas.coords("label16",dwidth/1.735,dheight/1.894)
-        dcanvas.coords("label17",dwidth/1.48,dheight/1.894)
-        dcanvas.coords("label18",dwidth/1.327,dheight/1.894)
-        dcanvas.coords("label19",dwidth/1.206,dheight/1.894)
-        dcanvas.coords("label20",dwidth/1.088,dheight/1.894)
-
-
-        dcanvas.coords("combo1",dwidth/1.088,dheight/1.71)
-        dcanvas.coords("combo2",dwidth/1.101,dheight/2.261)
+    Sys_mains_frame=Frame(tab1, height=750,bg="#2f516f",)
+    Sys_mains_frame.pack(fill=X)
     
-    canvas = Canvas(Sys_mains_frame,height=700,bg='#2f516f',scrollregion=(0,0,700,1200))
-    sr_Scroll = Scrollbar(Sys_mains_frame,orient=VERTICAL)
-    sr_Scroll.grid(row=0,column=1,sticky='ns')
-    sr_Scroll.config(command=canvas.yview)
-    canvas.bind("<Configure>", responsive_widgets)
-    canvas.config(yscrollcommand=sr_Scroll.set)
-    canvas.grid(row=0,column=0,sticky='nsew')
-    
+    canvas=Canvas(Sys_mains_frame,height=700,scrollregion=(0,0,700,1200),bg="#2f516f",border=0)
+    frame=Frame(canvas,bg="#2f516f")
+    myscrollbar=Scrollbar(Sys_mains_frame,orient="vertical",command=canvas.yview)
+    canvas.configure(yscrollcommand=myscrollbar.set)
+
+    myscrollbar.pack(side="right",fill="y")
+    canvas.pack(fill=X)
+    canvas.create_window((10,0),window=frame,anchor='nw')
 
     cmp_name=Label(canvas, text="Clown",bg="#213b52", fg="White",width=69, anchor="center",font=('Calibri 24 bold'))
   
@@ -1028,7 +903,7 @@ def main_sign_in():
     win_inv1 = canvas.create_window(900, 780, anchor="nw", window=canvasbar.get_tk_widget())
     
     #3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333Banking Section(Tab2)
-    
+
     tab_bank = ttk.Notebook(tab2)
     tab2_1 =  ttk.Frame(tab_bank)
     tab2_2=  ttk.Frame(tab_bank)
